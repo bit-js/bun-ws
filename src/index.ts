@@ -1,4 +1,5 @@
-import { Router, type ServerWebSocket } from './router';
+import { Router } from './router';
+import type { ServerWebSocket } from './router';
 import type { Serve, Server, WebSocketHandler } from 'bun';
 
 export interface Handler<T = undefined> {
@@ -85,7 +86,7 @@ export function bind(server: Server): void {
  */
 export function serve(options: {
     server: Serve,
-    ws?: WebSocketHandler<any>
+    ws?: Partial<WebSocketHandler<any>>
 }): Server {
     // @ts-expect-error Assign websocket handler
     options.server.websocket = typeof options.ws === 'undefined' ? new Router() : new Router(options.ws);
